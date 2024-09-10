@@ -8,3 +8,47 @@ sum=$((sum+i))
 i=$((i+2)) 
 done 
 echo Sum is $sum 
+
+
+
+echo "Enter the filename:"
+read filename
+if [ ! -e "$filename" ]; then
+  echo "File does not exist."
+  exit 1
+fi
+if [ -x "$filename" ]; then
+  echo "The file already has execute permission."
+else
+  echo "The file does not have execute permission. Adding execute permission..."
+  chmod u+x "$filename"
+  if [ -x "$filename" ]; then
+    echo "Execute permission has been added."
+  else
+    echo "Failed to add execute permission."
+  fi
+fi
+
+
+for stem in *; do
+  if [ -d " $item " ] ; then
+    echo " $item "
+  fi
+done
+
+
+if [ $# -eq 0 ]; then
+  echo "Usage: $0 <pattern>"
+  exit 1
+fi
+pattern=$1
+for file in *; do
+  if [ -f "$file" ]; then
+    if grep -q "$pattern" "$file"; then
+      echo "Pattern found in file: $file"
+    else
+      echo "Pattern not found in file: $file"
+    fi
+  fi
+done
+
